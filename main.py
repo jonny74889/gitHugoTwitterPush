@@ -58,7 +58,7 @@ def update_metadata_file(file_list, metadata_file_path):
     return True
 
 def get_data_files(data_folder_path):
-    extension = '.json'
+    extension = '.md'
 
     # if given empty path, it starts from the current directory
     files = [f for f in
@@ -67,13 +67,16 @@ def get_data_files(data_folder_path):
 
     for file in files:
         # Construct the metadata json
+        print(file)
         filename = os.path.basename(file)
+        print(filename)
         file_list.append(filename)
 
     file_list.sort()
     return file_list
 
 
+#works as expected
 def get_current_files(metadata_file_path):
     with open(metadata_file_path) as json_file:
         data = json.load(json_file)
@@ -90,9 +93,10 @@ if __name__ == '__main__':
     # 5. Write new content to README.md if required (Define template and describe)
 
     # Constants
-    DATA_FOLDER_PATH = 'content/posts'
+    #### replace DATA_FOLDER_PATH with env
+    DATA_FOLDER_PATH = './content/posts'
     README_FILE_PATH = 'README.md'
-    METADATA_FILE_PATH = os.path.join(DATA_FOLDER_PATH, '0_metadata.json')
+    METADATA_FILE_PATH = os.path.join(DATA_FOLDER_PATH, '0_metadata.json') # file required to identify delta between commits
 
     # 1. Read existing metadata file and get the list of files
     list_current_files = get_current_files(
