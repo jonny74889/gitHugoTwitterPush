@@ -3,48 +3,8 @@
 import glob
 import json
 import os
+import sys, getopt #to get parameters
 
-
-def update_readme_file(new_file_list, data_folder_path, readme_file_path):
-    # Inner function
-    def generate_content(content_data):
-
-        name = content_data['name']  # Type: str
-        desc = content_data['desc']  # Type: str
-        code = content_data['code']  # Type: list<str>
-
-        template = ["- ### {}".format(name),
-                    "\n",
-                    "{}".format(desc),
-                    "\n\n",
-                    "```python",
-                    "\n"]
-
-        for line in code:
-            template.append(str(line))
-            template.append("\n")
-
-        template.append("```")
-        template.append("\n")
-
-        return template
-
-    readme_content = []
-    # read the content of each file and append
-    for file in new_file_list:
-        file_path = os.path.join(data_folder_path, file)
-
-        with open(file_path) as json_file:
-            json_data = json.load(json_file)
-            data = json_data['data']
-
-        readme_content += generate_content(data)
-
-    with open(readme_file_path, 'a+') as f:
-        print(readme_content)
-        f.writelines(readme_content)
-
-    return True
 
 def update_metadata_file(file_list, metadata_file_path):
     file_list.sort()
@@ -84,13 +44,58 @@ def get_current_files(metadata_file_path):
 
 
 if __name__ == '__main__':
+    twitterSecret = ''
+    #get secrets for api
+    paramMessage = 'main.py -ck <consumerKey> -cs <consumerSecret> -tk <tokenKey> -ts <tokenSecret>'
+    try:
+      opts, args = getopt.getopt(sys.argv[1:],"hck:cs:tk:ts",["consumerKey=", "consumerSecret=", "tokenKey=", "tokenSecret=" ])
+    except getopt.GetoptError as e:
+      print(e.toString())
+      sys.exit(2)
+
+    if not opts:
+        print(paramMessage)
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print(paramMessage)
+            sys.exit()
+        elif opt in ("-ck", "--consumerKey"):
+            #TODO
+            if not arg and not arg == '':
+                twitterSecret = arg
+            else:
+                print('Missing parameter. Pass '+paramMessage)
+                sys.exit(2)
+        elif opt in ("-cs", "--consumerSecret"):
+            #TODO
+            if not arg and not arg == '':
+                twitterSecret = arg
+            else:
+                print('Missing parameter. Pass '+paramMessage)
+                sys.exit(2)
+        elif opt in ("-tk", "--tokenKey"):
+            #TODO
+            if not arg and not arg == '':
+                twitterSecret = arg
+            else:
+                print('Missing parameter. Pass '+paramMessage)
+                sys.exit(2)
+        elif opt in ("-ts", "--tokenSecret"):
+            #TODO
+            if not arg and not arg == '':
+                twitterSecret = arg
+            else:
+                print('Missing parameter. Pass '+paramMessage)
+                sys.exit(2)
+
 
     ## Algorithm
     # 1. Read existing metadata file and get the list of files
     # 2. Read all files from the `/data` folder
     # 3. Figure out the list of new files
     # 4. Update metadata file if required
-    # 5. Write new content to README.md if required (Define template and describe)
+    # 5. loop over new posts
 
     # Constants
     #### replace DATA_FOLDER_PATH with env
@@ -118,8 +123,4 @@ if __name__ == '__main__':
         print("Updated metadata file: " + str(status))
 
     if list_new_files:
-        # 5. Append new content to README.md if required
-        status = update_readme_file(new_file_list=list_new_files,
-                           data_folder_path=DATA_FOLDER_PATH,
-                           readme_file_path=README_FILE_PATH)
-        print("Updated Readme file: " + str(status))
+        print('Todo')
