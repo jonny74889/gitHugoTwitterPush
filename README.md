@@ -12,8 +12,13 @@
   ```
 - go to github and define action and workflow
 - create branch update as well as remote branch
-  - the update branch is the entry point
+  - the update branch is the entry point for the workflow
+  - create local branch `git checkout -b feature_branch_name` or via git `git branch <name>`
+  - create/update remote repo `git push -u origin feature_branch_name`
 
+- since the action is going to change the update branch remotely you need to perform `git fetch` & `git pull` to get the latest changes before committing again.
+
+To cleanup:
 - to delete branch local run `git branch -d <name of branch>`
 - to delete branch remote run `git push origin --delete <branch>`
 
