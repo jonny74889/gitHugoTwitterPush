@@ -13,7 +13,7 @@ jobs:
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
         ref: update
     - name: change file
-      run: echo "wow2" >> content/posts/test1.md
+      run: echo "wow2222" >> content/posts/test3.md
     - name: git config
       run: git config --local user.email "action@github.com"
     - name: git config
@@ -31,7 +31,7 @@ jobs:
         branch: 'update'
     - uses: actions/checkout@v2 #checkout master
       with:
-        ref: master
+        ref: origin
     - name: Merge to master branch
       uses: devmasx/merge-branch@v1.1.0
       with:
