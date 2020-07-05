@@ -1,0 +1,68 @@
+
+name: Create Tweets update Posts and build Hugo 
+# This workflow is triggered on pushes to the repository.
+on:
+  push:
+    branches:
+      - 'update'
+
+jobs:
+  scanFilesAndTweet:
+    # This job runs on Linux
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+        ref: update
+    - name: Install requirements
+      run: pip install -r ./.github/workflows/requirements.txt
+    - name: Run a one-line script
+      run: python ./.github/workflows/main.py -ck ck -cs cs -tk tk -ts ts #important to call python from current folder, avoids issues with pathfinding
+
+    #####run hugo build command ####
+    - name: Hugo Action
+      uses: srt32/hugo-action@master
+      #args: <Hugo args> #optional - i do not need it just build
+
+    ####commit changes to update ####
+    - name: git config
+      run: git config --local user.email "action@github.com"
+    - name: git config
+      run: git config --local user.name "GitHub Action"
+    - name: git add --all
+      run: git add --all
+    - name: status
+      run: git status
+    - name: git commit
+      run: git commit -m "Updated posts with Tweet handles" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: 'update'
+
+  ####### Merge master & update and push to master
+  mergeUpdateToMasterCommit:
+      # This job runs on Linux
+      runs-on: ubuntu-latest
+      steps:
+    - uses: actions/checkout@v2 #checkout master
+      with:
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+        ref: master
+    - name: git config
+      run: git config --local user.email "action@github.com"
+    - name: git config
+      run: git config --local user.name "GitHub Action"
+    - name: git merge origin/update
+      run: git merge origin/update
+    - name: status
+      run: git status
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: 'master'
