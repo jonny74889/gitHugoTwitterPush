@@ -14,6 +14,9 @@
 - create branch update as well as remote branch
   - the update branch is the entry point
 
+- to delete branch local run `git branch -d <name of branch>`
+- to delete branch remote run `git push origin --delete <branch>`
+
 1.  Posts folder required metadata file:
   0_metadata.json
   {
