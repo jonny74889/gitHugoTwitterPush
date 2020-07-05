@@ -13,7 +13,7 @@ jobs:
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
         ref: update
     - name: change file
-      run: echo "wow2222" >> content/posts/test3.md
+      run: echo "wow2" >> content/posts/test1.md
     - name: git config
       run: git config --local user.email "action@github.com"
     - name: git config
@@ -31,11 +31,26 @@ jobs:
         branch: 'update'
     - uses: actions/checkout@v2 #checkout master
       with:
-        ref: origin
-    - name: Merge to master branch
-      uses: devmasx/merge-branch@v1.1.0
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+        ref: master
+    - name: git config
+      run: git config --local user.email "action@github.com"
+    - name: git config
+      run: git config --local user.name "GitHub Action"
+    - name: git merge update
+      run: git merge update
+    - name: status
+      run: git status
+    - name: Push changes
+      uses: ad-m/github-push-action@master
       with:
-        type: now
-        target_branch: 'update'
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: 'master'
+    # - name: Merge to master branch
+    #   uses: devmasx/merge-branch@v1.1.0
+    #   with:
+    #     type: now
+    #     target_branch: 'master'
+    #   env:
+    #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
