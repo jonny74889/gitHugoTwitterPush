@@ -1,6 +1,13 @@
-#Python script which identifies new posts
+# Description of workflow
+Workflow is triggered on push to branch *update*.
+1. A job is run which checks out the repo and executes a python script that iterates over new files in *content/posts/*. The script then generates twitter tweets according to the metadata and adapts the files.
+2. Then an action to build Hugo files is executed
+3. The changes are then committed to the branch *update*
+4. A new job is executed to merge the update changes to master and commit
 
-# How to use automation workflow
+5. On commit/push to master a new workflow is triggered which deploys the Hugo page to firebase
+
+## How to use automation workflow
 - add .github/ folder to your repo
 - create file 0_metadata.json in folder where you want to track and adapt the files. Content of the file:
   ```
@@ -22,29 +29,11 @@ To cleanup:
 - to delete branch local run `git branch -d <name of branch>`
 - to delete branch remote run `git push origin --delete <branch>`
 
-1.  Posts folder required metadata file:
-  0_metadata.json
-  {
-   "files": [
-    "0_metadata.json",
-    ]
-  }
-
-  This file is used to track delta between posts.
-
-2. Secondly the script reads the frontmatter for twitter and creates a new tweet
-
-3. New tweet id is stored and updated in post
-
-4. iterate over list and repeat till done
-
-5. push to master
-
-#### TODO
-- TODO replace DATA_FOLDER_PATH with env
-- Getting list of new files works
-- Env replacement string and twitter comment
-- next read content of new files into string
-- identify twitter sections
-- create new tweet
-- update files
+## Configuration & Pre-requisites
+1. copy .github/workflows to your repo, create a local and remote update branch
+2. create a the 0_metadata.json file in the *content/posts/* folder. This is required to track new files
+3. make sure to remove the mergeTest.yml from the .github/workflows/ folder => This is not needed and can have a negative impact on the workflow
+4. Create the Github secret FIREBASE_TOKEN
+  - To get the token execute `firebase login:ci` in your local env. Copy the key in the Github secret
+    - [Firebase CLI wrapper](https://github.com/w9jds/firebase-action)
+    - [Hugo execution](https://github.com/srt32/hugo-action)
