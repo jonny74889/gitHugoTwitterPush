@@ -38,8 +38,8 @@ jobs:
       run: git config --local user.email "action@github.com"
     - name: git config
       run: git config --local user.name "GitHub Action"
-    - name: git merge update
-      run: git merge update
+    - name: git merge origin/update
+      run: git merge origin/update
     - name: status
       run: git status
     - name: Push changes
