@@ -1,8 +1,8 @@
 name: Merge update branch to Master
-# on:
-#   push:
-#     branches:
-#       - 'update'
+on:
+  push:
+    branches:
+      - 'unicorn'
 jobs:
   merge-branch:
     runs-on: ubuntu-latest
