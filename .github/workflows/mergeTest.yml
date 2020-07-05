@@ -24,12 +24,11 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: 'update'
-    - name: Merge
-      - uses: actions/checkout@master
-      - name: Merge to uat branch
-        uses: devmasx/merge-branch@v1.1.0
-        with:
-          type: now
-          target_branch: 'update'
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Merge to uat branch
+      uses: actions/checkout@master
+      uses: devmasx/merge-branch@v1.1.0
+      with:
+        type: now
+        target_branch: 'update'
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
