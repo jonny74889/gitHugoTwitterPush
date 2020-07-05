@@ -16,7 +16,7 @@
   - create local branch `git checkout -b feature_branch_name` or via git `git branch <name>`
   - create/update remote repo `git push -u origin feature_branch_name`
 
-- since the action is going to change the update branch remotely you need to perform `git fetch` & `git pull` to get the latest changes before committing again.
+- since the action is going to change the update branch remotely you need to perform `git pull` to get the latest changes before adding local changes and pushing again.
 
 To cleanup:
 - to delete branch local run `git branch -d <name of branch>`
