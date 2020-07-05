@@ -13,7 +13,7 @@ jobs:
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
         ref: update
     - name: change file
-      run: echo "wow" >> ./contents/posts/test1.md
+      run: echo "wow" >> content/posts/test1.md
     - name: git config
       run: git config --local user.email "action@github.com"
     - name: git config
