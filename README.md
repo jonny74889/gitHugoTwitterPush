@@ -37,3 +37,12 @@ To cleanup:
   - To get the token execute `firebase login:ci` in your local env. Copy the key in the Github secret
     - [Firebase CLI wrapper](https://github.com/w9jds/firebase-action)
     - [Hugo execution](https://github.com/srt32/hugo-action)
+
+## Important note if you want to generate Twitter tweets and use the script
+1. To use the twitter script you need to add the following github secrets
+2. Every post for which you want to create a tweet needs to have the following strings somewhere in the file:
+```
+tweet: XXXXXXXXXXXX|
+twitterContentBegin: {"text": "This is the text", "hashtags": ["#theprogress", "#number2"], "url": "https://theprogress.site/{{ .Name }}" }:twitterContentEnd
+```
+  This code was written for hugo. Hugo removes the Metadata or so called frontmatter from the displayed content. If you use something different then you might need to adapt the script and also your metadata in the posts.

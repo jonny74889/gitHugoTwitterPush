@@ -1,5 +1,5 @@
 
-name: Create Tweets update Posts and build Hugo 
+name: Create Tweets update Posts and build Hugo
 # This workflow is triggered on pushes to the repository.
 on:
   push:
@@ -48,21 +48,21 @@ jobs:
       # This job runs on Linux
       runs-on: ubuntu-latest
       steps:
-    - uses: actions/checkout@v2 #checkout master
-      with:
-        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
-        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
-        ref: master
-    - name: git config
-      run: git config --local user.email "action@github.com"
-    - name: git config
-      run: git config --local user.name "GitHub Action"
-    - name: git merge origin/update
-      run: git merge origin/update
-    - name: status
-      run: git status
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: 'master'
+      - uses: actions/checkout@v2 #checkout master
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+          ref: master
+      - name: git config
+        run: git config --local user.email "action@github.com"
+      - name: git config
+        run: git config --local user.name "GitHub Action"
+      - name: git merge origin/update
+        run: git merge origin/update
+      - name: status
+        run: git status
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: 'master'
