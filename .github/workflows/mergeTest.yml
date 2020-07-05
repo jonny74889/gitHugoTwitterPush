@@ -34,6 +34,6 @@ jobs:
       uses: devmasx/merge-branch@v1.1.0
       with:
         type: now
-        target_branch: 'master'
+        target_branch: 'update'
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
