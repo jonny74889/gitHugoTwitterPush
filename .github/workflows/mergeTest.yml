@@ -1,4 +1,4 @@
-name: Merge staging branch to Master
+name: Merge update branch to Master
 on:
   push:
     branches:
