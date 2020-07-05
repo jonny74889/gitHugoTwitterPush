@@ -1,4 +1,19 @@
 #Python script which identifies new posts
+
+# How to use automation workflow
+- add .github/ folder to your repo
+- create file 0_metadata.json in folder where you want to track and adapt the files. Content of the file:
+  ```
+  {
+   "files": [
+    "0_metadata.json",
+    ]
+  }
+  ```
+- go to github and define action and workflow
+- create branch update as well as remote branch
+  - the update branch is the entry point
+
 1.  Posts folder required metadata file:
   0_metadata.json
   {
