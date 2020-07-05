@@ -19,7 +19,7 @@ jobs:
     - name: Install requirements
       run: pip install -r ./.github/workflows/requirements.txt
     - name: Run a one-line script
-      run: python ./.github/workflows/main.py -ck ck -cs cs -tk tk -ts ts #important to call python from current folder, avoids issues with pathfinding
+      run: python ./.github/workflows/main.py -c ${{ secrets.CONSUMER_KEY }} -s ${{ secrets.CONSUMER_SECRET }} -t ${{ secrets.ACCESS_TOKEN }} -o ${{ secrets.ACCESS_TOKEN }} #important to call python from current folder, avoids issues with pathfinding
 
     #####run hugo build command ####
     - name: Hugo Action
