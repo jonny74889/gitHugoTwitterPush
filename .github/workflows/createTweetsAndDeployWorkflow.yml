@@ -1,49 +1,43 @@
-
-name: Create Tweets update Posts and deploy
-# This workflow is triggered on pushes to the repository.
-on: [push]
-
-jobs:
-  scanFilesAndTweet:
-    # Job name is Greeting
-    name: scanFilesAndTweet
-    #event -> filtering on branch
-    on:
-      push: #TOD to check, migh be required to change it
-        - update
-    # file paths to consider in the event. Optional; defaults to all.
-    # paths:
-      # - 'test/*'
-    # This job runs on Linux
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Install requirements
-      run: pip install -r ./.github/workflows/requirements.txt
-    - name: Run a one-line script
-      run: python ./.github/workflows/main.py -ck ck -cs cs -tk tk -ts ts #important to call python from current folder, avoids issues with pathfinding
-    - name: Commit changed files
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add *
-        git commit -m "Updated posts with Tweet handles" -a
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: 'update'
-  hugoDeployToFirebase: #maybe just add this on master push
-    name: hugoDeployToFirebase
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@master
-      - name: Hugo Action
-        uses: srt32/hugo-action@master
-        #args: <Hugo args> #optional - i do not need it just build
-      - name: Deploy to Firebase
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+# 
+# name: Create Tweets update Posts and deploy
+# # This workflow is triggered on pushes to the repository.
+# on:
+#   push:
+#     branches:
+#       - 'update'
+#
+# jobs:
+#   scanFilesAndTweet:
+#     # This job runs on Linux
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Install requirements
+#       run: pip install -r ./.github/workflows/requirements.txt
+#     - name: Run a one-line script
+#       run: python ./.github/workflows/main.py -ck ck -cs cs -tk tk -ts ts #important to call python from current folder, avoids issues with pathfinding
+#     - name: Commit changed files
+#       run: |
+#         git config --local user.email "action@github.com"
+#         git config --local user.name "GitHub Action"
+#         git add *
+#         git commit -m "Updated posts with Tweet handles" -a
+#     - name: Push changes
+#       uses: ad-m/github-push-action@master
+#       with:
+#         github_token: ${{ secrets.GITHUB_TOKEN }}
+#         branch: 'update'
+#   hugoDeployToFirebase: #maybe just add this on master push
+#     name: hugoDeployToFirebase
+#     steps:
+#       - name: Checkout Repo
+#         uses: actions/checkout@master
+#       - name: Hugo Action
+#         uses: srt32/hugo-action@master
+#         #args: <Hugo args> #optional - i do not need it just build
+#       - name: Deploy to Firebase
+#         uses: w9jds/firebase-action@master
+#         with:
+#           args: deploy --only hosting
+#         env:
+#           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

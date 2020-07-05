@@ -7,23 +7,29 @@ jobs:
   merge-branch:
     runs-on: ubuntu-latest
     steps:
-    - name: Commit changed files
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add *
-          git commit -m "Updated posts with Tweet handles" -a
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+    - uses: actions/checkout@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: 'update'
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+    - name: git config
+      run: git config --local user.email "action@github.com"
+    - name: git config
+      run: git config --local user.name "GitHub Action"
+    - name: git add *
+      run: git add *
+    - name: git commit
+      run: git commit -m "Updated posts with Tweet handles" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: 'update'
     - name: Merge
       - uses: actions/checkout@master
       - name: Merge to uat branch
         uses: devmasx/merge-branch@v1.1.0
         with:
           type: now
-          target_branch: 'master'
+          target_branch: 'update'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
