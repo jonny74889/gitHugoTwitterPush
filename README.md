@@ -1,3 +1,8 @@
+# GITHUB TOKEN - Pitfall during workflows
+If you use ${{ secrets.GITHUB_TOKEN }} for pushing to git no action is triggered. This is to avoid loops.
+If you need to create an action you need to use a personal token -> Personal Account -> Settings -> developer Settings -> Create token
+Store it as secret. Use it in your step e.g. ${{ secrets.PERSONAL_TOKEN }} and the push will register as action.
+
 # Description of workflow
 Workflow is triggered on push to branch *update*.
 1. A job is run which checks out the repo and executes a python script that iterates over new files in *content/posts/*. The script then generates twitter tweets according to the metadata and adapts the files.

@@ -61,7 +61,7 @@ def createTweetAndModify(post_file_path):
 
     #identify metadata
     searchTerm1 =  'twitterContentBegin: '
-    searchTerm2 = ':twitterContentEnd'
+    searchTerm2 = 'twitterContentEnd: End'
     startTwitter = content.find(searchTerm1)
     endTwitter = content.find(searchTerm2)
     if startTwitter == -1 or endTwitter == -1:
@@ -76,7 +76,7 @@ def createTweetAndModify(post_file_path):
         print('Error during processing of: '+post_file_path)
         return 'Error, tweet Data corrupt in post '+post_file_path
     ##remove :twitterContentEnd
-    content = content.replace(':twitterContentEnd', '')
+    content = content.replace('twitterContentEnd: End', '')
 
     #create tweet
     tweetId = ''
@@ -111,18 +111,21 @@ def createTweetAndModify(post_file_path):
         print('--------------------------')
         print('Tweet successfully created')
         print('--------------------------')
+
+        print('Adapt post entry and prepare for hugo build: '+post_file_path)
+        #modify file content
+        content = content.replace('tweet: XXXXXXXXXXXX|', 'tweet: '+tweetId)
+
+        #write file and exit
+        writing_file = open(post_file_path, 'w+')
+        writing_file.write(content)
+        writing_file.close()
     except Exception as e:
         print('Error during processing of: '+post_file_path)
         print(str(e))
         return 'Error, issue with Twitter API for'+post_file_path
 
-    #modify file content
-    content = content.replace('tweet: XXXXXXXXXXXX|', 'tweet: '+tweetId)
 
-    #write file and exit
-    writing_file = open(post_file_path, 'w+')
-    writing_file.write(content)
-    writing_file.close()
 
 if __name__ == '__main__':
     #because i am lazy... - global scope for keys
