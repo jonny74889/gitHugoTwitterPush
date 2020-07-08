@@ -71,5 +71,5 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.        github_token: ${{ secrets.GITHUB_TOKEN }} #ATTENTION if GITHUB_TOKEN is used then no push actions are triggered. You need to use your personal token to trigger this => PERSONAL_TOKEN
+          github_token: ${{ secrets.GITHUB_TOKEN }} #ATTENTION if GITHUB_TOKEN is used then no push actions are triggered. You need to use your personal token to trigger this => PERSONAL_TOKEN
           branch: 'master'
